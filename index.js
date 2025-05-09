@@ -43,9 +43,14 @@
 
 // module.exports.handler = serverless(app);
 
+const express = require('express');
 const mysql = require('mysql2/promise');
 const axios = require('axios');
 
+const app = express();
+const port = 3000;
+
+// Direct DB config (use only in non-production/testing)
 const DB_CONFIG = {
   host: 'lamda-database.codwuuuagdzo.us-east-1.rds.amazonaws.com',
   user: 'admin',
@@ -53,22 +58,36 @@ const DB_CONFIG = {
   database: 'myappdb',
 };
 
-(async () => {
-  console.log("Checking internet connectivity...");
+app.get('/', async (req, res) => {
+  const results = {
+    internet: false,
+    rds: false,
+  };
+
+  // Internet check
   try {
-    await axios.get("https://www.google.com");
-    console.log("✅ Internet is online");
+    await axios.get('https://www.google.com');
+    results.internet = true;
+    console.log('✅ Internet is online');
   } catch (err) {
-    console.error("❌ Internet check failed:", err.message);
+    console.error('❌ Internet check failed:', err.message);
   }
 
-  console.log("Checking RDS connection...");
+  // RDS connection check
   try {
     const conn = await mysql.createConnection(DB_CONFIG);
-    await conn.query("SELECT 1");
+    await conn.query('SELECT 1');
     await conn.end();
-    console.log("✅ Connected to RDS successfully");
+    results.rds = true;
+    console.log('✅ Connected to RDS successfully');
   } catch (err) {
-    console.error("❌ Failed to connect to RDS:", err.message);
+    console.error('❌ Failed to connect to RDS:', err.message);
   }
-})();
+
+  res.json(results);
+});
+
+app.listen(port, () => {
+  console.log(`Health check Express server running on port ${port}`);
+});
+

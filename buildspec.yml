@@ -28,8 +28,10 @@ phases:
 
   build:
     commands:
-      - echo "Running health check script..."
-      - node index.js
+      - echo "Running health check with Express..."
+      - node index.js &
+      - sleep 2
+      - curl http://localhost:3000
 
 artifacts:
   files:
