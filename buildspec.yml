@@ -25,8 +25,7 @@ phases:
     commands:
       - echo "Installing dependencies..."
       - npm install
-      - echo "Installing MySQL client..."
-      - sudo apt-get update && sudo apt-get install -y mysql-client
+
   build:
     commands:
       - echo "Running health check script..."
