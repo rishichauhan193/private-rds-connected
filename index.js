@@ -54,28 +54,21 @@ const DB_CONFIG = {
 };
 
 (async () => {
-  let rdsStatus = 'Disconnected';
-  let internetStatus = 'No Internet';
+  console.log("Checking internet connectivity...");
+  try {
+    await axios.get("https://www.google.com");
+    console.log("✅ Internet is online");
+  } catch (err) {
+    console.error("❌ Internet check failed:", err.message);
+  }
 
-  // Check RDS connection
+  console.log("Checking RDS connection...");
   try {
     const conn = await mysql.createConnection(DB_CONFIG);
-    await conn.query('SELECT 1');
+    await conn.query("SELECT 1");
     await conn.end();
-    rdsStatus = 'Connected to RDS';
+    console.log("✅ Connected to RDS successfully");
   } catch (err) {
-    rdsStatus = `RDS Connection Error: ${err.message}`;
+    console.error("❌ Failed to connect to RDS:", err.message);
   }
-
-  // Check Internet
-  try {
-    await axios.get('https://www.google.com');
-    internetStatus = 'Internet is Online';
-  } catch (err) {
-    internetStatus = `Internet Error: ${err.message}`;
-  }
-
-  console.log('===== Health Check Result =====');
-  console.log(`RDS Status: ${rdsStatus}`);
-  console.log(`Internet Status: ${internetStatus}`);
 })();
