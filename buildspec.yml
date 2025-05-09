@@ -25,11 +25,12 @@ phases:
     commands:
       - echo "Installing dependencies..."
       - npm install
-      - echo "Updating apt and installing MySQL client & server..."
-      - apt-get update
-      - apt-get install -y mysql-client mysql-server
 
   build:
     commands:
       - echo "Running health check script..."
       - node index.js
+
+artifacts:
+  files:
+    - '**/*'
