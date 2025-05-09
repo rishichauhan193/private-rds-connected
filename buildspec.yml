@@ -23,18 +23,17 @@ phases:
     runtime-versions:
       nodejs: 18
     commands:
-      - echo Installing dependencies...
+      - echo "Installing dependencies..."
       - npm install
-      - echo "Checking internet connection..."
-      - ping -c 4 google.com  # Test internet connection
-      - echo "Internet is online"
-      
-      - echo "Testing database connection..."
-      - echo "Database connected successfully"
+      - echo "Installing MySQL client..."
+      - apt-get update && apt-get install -y mysql-client
+
   build:
     commands:
-      - echo Zipping function...
-      - zip -r function.zip index.js node_modules/  # Add other files as needed
+      - echo "Running health check script..."
+      - node index.js
+
 artifacts:
   files:
-    - function.zip
+    - index.js
+
