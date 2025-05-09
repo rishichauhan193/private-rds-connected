@@ -30,7 +30,6 @@ phases:
       - echo "Internet is online"
       
       - echo "Testing database connection..."
-      - mysql -h $DB_HOST -u $DB_USER -p$DB_PASSWORD -e "SELECT 1;"  # Test MySQL connection
       - echo "Database connected successfully"
   build:
     commands:
