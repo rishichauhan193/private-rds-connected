@@ -9,8 +9,8 @@ phases:
       - npm install
   build:
     commands:
-      - echo Zipping function for deployment...
-      - powershell -Command "Compress-Archive -Path * -DestinationPath function.zip"
+      - echo Zipping function...
+      - zip -r function.zip index.js node_modules/  # Add other files as needed
 artifacts:
   files:
     - function.zip
