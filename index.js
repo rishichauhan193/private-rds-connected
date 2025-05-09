@@ -47,10 +47,10 @@ const mysql = require('mysql2/promise');
 const axios = require('axios');
 
 const DB_CONFIG = {
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_NAME,
+  host: 'lamda-database.codwuuuagdzo.us-east-1.rds.amazonaws.com',
+  user: 'admin',
+  password: 'lamda789',
+  database: 'myappdb',
 };
 
 (async () => {
