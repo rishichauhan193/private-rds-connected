@@ -28,6 +28,9 @@ phases:
       - echo "Checking internet connection..."
       - ping -c 4 google.com  # Test internet connection
       - echo "Internet is online"
+      
+      - echo "Installing MySQL client..."
+      - sudo apt-get update && sudo apt-get install -y mysql-client  # Install MySQL client on Ubuntu
       - echo "Testing database connection..."
       - mysql -h $DB_HOST -u $DB_USER -p$DB_PASSWORD -e "SELECT 1;"  # Test MySQL connection
       - echo "Database connected successfully"
